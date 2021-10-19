@@ -9,7 +9,7 @@ The request need the current time stamp, that is provided by the python time lib
 Each row is saved in a sqlite database, that can be queried later.
 The scraping is incremental, only new lines will be added every day
 
-## how to install and use it
+## How to install and use it
 Copy the repository and build from the Dockerimage:
 
 
