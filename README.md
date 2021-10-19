@@ -1,5 +1,7 @@
 # docker-cron
 A simple docker container that runs a cron invoking a shell script.
+The script scrape [https://www.enforcementtracker.com] and populate a sqlite database.
+
 
 ## how to install and use it
 Copy the repository and build from the Dockerimage:
