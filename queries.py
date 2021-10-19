@@ -1,7 +1,7 @@
 import sqlite3
 import sys
 
-con = sqlite3.connect('scraped_database.db')
+con = sqlite3.connect('/app/scraped_database.db')
 con.row_factory = lambda cursor, row: row[0]
 cur = con.cursor()
 

@@ -49,7 +49,7 @@ def populate(cur,today_timestamp):
             con.commit()
     return new_rows_count
 #Connect to the Database and populate and call the populate function
-con = sqlite3.connect('scraped_database.db')
+con = sqlite3.connect('/app/scraped_database.db')
 con.row_factory = lambda cursor, row: row[0]
 cur = con.cursor()
 new_rows_count = populate(cur,time.time())
