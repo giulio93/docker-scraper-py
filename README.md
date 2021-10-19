@@ -2,6 +2,12 @@
 A simple docker container that runs a cron invoking a shell script.
 The script scrape [https://www.enforcementtracker.com] and populate a sqlite database.
 
+## How it works
+A cron job trigger a python script daily.
+The python script user request library in order to get the data in json format. The same data that are used to populate each row of the table in the side, and also the info under the plus button widget attached to each row.
+The request need the current time stamp, that is provided by the python time library.
+Each row is saved in a sqlite database, that can be queried later.
+The scraping is incremental, only new lines will be added every day
 
 ## how to install and use it
 Copy the repository and build from the Dockerimage:
