@@ -7,12 +7,13 @@ The script scrape [https://www.enforcementtracker.com] and populate a sqlite dat
 Copy the repository and build from the Dockerimage:
 
 
-`$ sudo docker build --rm -t docker-cron . `
+`$ sudo docker build --rm -t docker-scraper . `
 
 
 Run the docker container in the background (docker returns the id of the container):
-
-
+```
+docker exec -t -i $(sudo docker run -t -i -d docker-scrape) /bin/bash
+```
 ```
 $ sudo docker run -t -i -d docker-cron
 b149b5e7306dba492558c7024809f13cfbb616cccd0f4020db61bf715f4db836

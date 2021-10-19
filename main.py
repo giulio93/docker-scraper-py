@@ -4,10 +4,12 @@ import json
 import time
 from datetime import datetime
 
+
 #Function that will populate the database
-def populate(cur,today_timestamp,count):
+def populate(cur,today_timestamp):
     #Try to create the penalties table,if not exist already
     ETids = []
+    new_rows_count = 0
     
     try:
         cur.execute('''CREATE TABLE penalties (ETid text, Country text, Date text, Fine real, Controller_Processor text,Quoted text,Type text,Source text)''')
@@ -23,7 +25,7 @@ def populate(cur,today_timestamp,count):
     for item in data["data"]:
         if(item[1] not in ETids):
             print(item[1]+" has been added!")
-            count+=1
+            new_rows_count+=1
             #Format the date
             if(item[4]=="Unknown"):#When a date is unknown we put the lowest value possible
                 ntime =  datetime.strptime("1800-01-01","%Y-%m-%d")
@@ -45,16 +47,16 @@ def populate(cur,today_timestamp,count):
             #Insert the row inside the database
             cur.execute("INSERT INTO penalties  VALUES(?,?,?,?,?,?,?,?)",(item[1],item[2].split("/>",1)[1],ntime.date(),item[5],item[6],item[8],item[9],link))
             con.commit()
+    return new_rows_count
 #Connect to the Database and populate and call the populate function
 con = sqlite3.connect('scraped_database.db')
 con.row_factory = lambda cursor, row: row[0]
 cur = con.cursor()
-count = 0
-populate(cur,time.time(),count)
+new_rows_count = populate(cur,time.time())
 
 
 cur.execute("SELECT COUNT(ETid) FROM penalties")
-print("The database has added : "+str(count)+" new rows")
+print("The database has added : "+str(new_rows_count)+" new rows")
 print("The database has: "+ str(cur.fetchall())+" rows in total")
 
 
