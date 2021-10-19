@@ -10,34 +10,36 @@ Copy the repository and build from the Dockerimage:
 `$ sudo docker build --rm -t docker-scraper . `
 
 
-Run the docker container in the background (docker returns the id of the container):
+Run the docker container and access with a bash interface:
 ```
-docker exec -t -i $(sudo docker run -t -i -d docker-scrape) /bin/bash
-```
-```
-$ sudo docker run -t -i -d docker-cron
-b149b5e7306dba492558c7024809f13cfbb616cccd0f4020db61bf715f4db836
+$ sudo docker exec -t -i $(sudo docker run -t -i -d docker-scrape) /bin/bash
 ```
 
-To check if it is running properly, connect to the container using the id and view the logfile. (You may have to wait 2 minutes)
+
+Check if it is running properly, once connected to the container, viewing the logfile. (Wait until you see any output)
 
 ```
-$ sudo docker exec -i -t b149b5e7306dba492558c7024809f13cfbb616cccd0f4020db61bf715f4db836 /bin/bash
-root@b149b5e7306d:/# cat /var/log/cron.log
-Thu May 26 13:11:01 UTC 2016: executed script
-Thu May 26 13:12:01 UTC 2016: executed script
+$root@5ed72d77c714:/app# tail -f /var/log/cron.log
+Tue Oct 19 13:53:01 UTC 2021: Scraper started!
+ETid-1 has been added!
+ETid-2 has been added!
+ETid-3 has been added!
+ETid-4 has been added!
+[..]
+ETid-875 has been added!
+ETid-876 has been added!
+The database has added : 876 new rows
+The database has: [876] rows in total
+
 ```
 
-The cron job is running. Now let's modify the interval and the actual job executed!
+The scraper job is running and the database is populated. 
+Now let's query the database! 
 
 
-## how to modify
+## Quering the database
 To change the interval the cron job is runned, just simply edit the *crontab* file. In default, the job is runned every minute.
-
-
-`* * * * * root /script.sh`
-
-To change the actual job performed just change the content of the *script.sh* file. In default, the script writes the date into a file located in */var/log/cron.log*.
-
-
-`echo "$(date): executed script" >> /var/log/cron.log 2>&1`
+```
+root@5ed72d77c714:/app# python3 queries.py help
+   
+```
