@@ -53,8 +53,8 @@ root@5ed72d77c714:/app# python3 queries.py help
 
 For example:
 
-The number of penalties for a specific country
-The average of fine given a specific country
+* The number of penalties for a specific country
+* The average of fine given a specific country
 ```bash
 root@d1c64cda7448:/app# python3 queries.py italy
 The number of penalties gathered by italy is 96
@@ -63,6 +63,7 @@ The avarage fine for italy is 59.583333333333336
 ```
 The number of penalties loaded in the database between two dates (based
 on date of decision field)
+
 ```bash
 root@d1c64cda7448:/app# python3 queries.py 2020-01-01 2021-01-01
 The number of penalties present in the database between 2020-01-01 AND 2021-01-01 is: 358
