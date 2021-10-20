@@ -26,7 +26,8 @@ def help():
     cur.execute('SELECT DISTINCT(Country) FROM penalties')
     print(cur.fetchall())
     print("=====================================================================================")
-    print("The number of penalties loaded in the database between two dates  ==> python3 queries.py <date_from> <date_to>")  
+    print("The number of penalties loaded in the database between two dates  ==> python3 queries.py <date_from> <date_to>")
+    print("!!!!!! PLEASE INPUT DATE IN THIS FORMAT YYYY-MM-DD !!!!!")    
 
 
 
@@ -47,9 +48,11 @@ if(len(sys.argv)==2):
                 print("The avarage fine for "+sys.argv[1]+" is "+str(avg_fine_per_c[0]))
 elif(len(sys.argv)==3):
     #The number of penalties loaded in the database between two dates (based on date of decision field) 
-    cur.execute('SELECT COUNT(Date) FROM penalties WHERE Date BETWEEN "'+str(sys.argv[1])+'" AND "'+str(sys.argv[2])+'"')
+    cur.execute('SELECT COUNT(ETid) FROM penalties WHERE Date BETWEEN "'+str(sys.argv[1])+'" AND "'+str(sys.argv[2])+'"')
     count_per_data=cur.fetchall()
+    print(count_per_data)
     if(count_per_data[0]==0):
         print("No penalties present in the range presented")
     else:
-        print("The number of penalties present in the database between "+str(sys.argv[1])+" AND "+str(sys.argv[2])+" is" + str(count_per_data[0]))
+        print("The number of penalties present in the database between "+str(sys.argv[1])+" AND "+str(sys.argv[2])+" is: " + str(count_per_data[0]))
+else: help()

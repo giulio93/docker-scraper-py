@@ -18,7 +18,7 @@ Copy the repository and build from the Dockerimage:
 
 Run the docker container and access with a bash interface:
 ```
-$ sudo docker exec -t -i $(sudo docker run -t -i -d docker-scrape) /bin/bash
+$ sudo docker exec -t -i $(sudo docker run -t -i -d docker-scraper) /bin/bash
 ```
 
 
