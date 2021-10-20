@@ -4,10 +4,10 @@ The script scrape [https://www.enforcementtracker.com] and populate a sqlite dat
 
 ## How it works
 A cron job trigger a python script daily.
-The python script user request library in order to get the data in json format. The same data that are used to populate each row of the table in the side, and also the info under the plus button widget attached to each row.
-The request need the current time stamp, that is provided by the python time library.
-Each row is saved in a sqlite database, that can be queried later.
-The scraping is incremental, only new lines will be added every day
+The python script use the request library in order to GET the data in json format. The same data that are used to populate each row of the table, scraping also all the info under the plus button widget attached to each row.
+The python time library is used to add the current timestap to the request.
+Each row is saved in a sqlite database, that can be queried thanks to the queries.py script.
+The scraping is incremental, only new lines (not alredy saved in the database) will be added every day!
 
 ## How to install and use it
 Copy the repository and build from the Dockerimage:
