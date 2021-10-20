@@ -1,11 +1,11 @@
 # docker-scraper-py
-A simple docker container that runs a cron invoking a shell script.
-The script scrape [https://www.enforcementtracker.com] and populate a sqlite database.
+A simple docker container that runs a cron job daily to scrape the table present in [https://www.enforcementtracker.com] and populate a sqlite database.
 
 ## How it works
-A cron job trigger a python script daily.
-The python script use the request library in order to GET the data in json format. The same data that are used to populate each row of the table, scraping also all the info under the plus button widget attached to each row.
-The python time library is used to add the current timestap to the request.
+The cron job invoke a shell script daily that trigger the python script.
+The python script use the request library in order to GET the data in json format. Each element of the json data array contains a row of the table,plus all the info under the "plus" widget attached to each row.
+The data are used to populate the table's database.
+The python time library is used to add the current timestap to the GET request.
 Each row is saved in a sqlite database, that can be queried thanks to the queries.py script.
 The scraping is incremental, only new lines (not alredy saved in the database) will be added every day!
 
@@ -22,7 +22,7 @@ $ sudo docker exec -t -i $(sudo docker run -t -i -d docker-scraper) /bin/bash
 ```
 
 
-Check if it is running properly, once connected to the container, viewing the logfile. (Wait until you see any output)
+Check if the cron job is running properly: once connected to the container use the tail -f command to see the cron log output. (Wait until you see any output)
 
 ```bash
 $root@5ed72d77c714:/app# tail -f /var/log/cron.log

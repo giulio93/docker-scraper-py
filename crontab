@@ -7,5 +7,8 @@
 # |  |  |  |  |
 # *  *  *  *  * user-name command to be executed
 
+#This cron job is run every minute, it used here in order to let the scrape happen withouth waiting a day!
 * * * * * root /script.sh
+#This is the right entry to run the cron job daily at midight
+#0 00 * * * root /script.sh 
 # An empty line is required at the end of this file for a valid cron file.
