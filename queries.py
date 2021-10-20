@@ -50,7 +50,6 @@ elif(len(sys.argv)==3):
     #The number of penalties loaded in the database between two dates (based on date of decision field) 
     cur.execute('SELECT COUNT(ETid) FROM penalties WHERE Date BETWEEN "'+str(sys.argv[1])+'" AND "'+str(sys.argv[2])+'"')
     count_per_data=cur.fetchall()
-    print(count_per_data)
     if(count_per_data[0]==0):
         print("No penalties present in the range presented")
     else:

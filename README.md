@@ -17,14 +17,14 @@ Copy the repository and build from the Dockerimage:
 
 
 Run the docker container and access with a bash interface:
-```
+```bash
 $ sudo docker exec -t -i $(sudo docker run -t -i -d docker-scraper) /bin/bash
 ```
 
 
 Check if it is running properly, once connected to the container, viewing the logfile. (Wait until you see any output)
 
-```
+```bash
 $root@5ed72d77c714:/app# tail -f /var/log/cron.log
 Tue Oct 19 13:53:01 UTC 2021: Scraper started!
 ETid-1 has been added!
@@ -44,8 +44,30 @@ Now let's query the database!
 
 
 ## Quering the database
-To change the interval the cron job is runned, just simply edit the *crontab* file. In default, the job is runned every minute.
-```
+Exit from the tail -f output (CTRL + D) and query the database using the custom command!
+Use the help function to show which queries are available:
+```bash
 root@5ed72d77c714:/app# python3 queries.py help
    
 ```
+
+For example:
+
+The number of penalties for a specific country
+The average of fine given a specific country
+```bash
+root@d1c64cda7448:/app# python3 queries.py italy
+The number of penalties gathered by italy is 96
+The avarage fine for italy is 59.583333333333336
+   
+```
+The number of penalties loaded in the database between two dates (based
+on date of decision field)
+```bash
+root@d1c64cda7448:/app# python3 queries.py 2020-01-01 2021-01-01
+The number of penalties present in the database between 2020-01-01 AND 2021-01-01 is: 358
+   
+```
+
+
+
