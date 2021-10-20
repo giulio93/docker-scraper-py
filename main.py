@@ -3,6 +3,8 @@ import sqlite3
 import json
 import time
 from datetime import datetime
+import re
+
 
 
 #Function that will populate the database
@@ -12,7 +14,8 @@ def populate(cur,today_timestamp):
     new_rows_count = 0
     
     try:
-        cur.execute('''CREATE TABLE penalties (ETid text, Country text, Date text, Fine real, Controller_Processor text,Quoted text,Type text,Source text)''')
+        cur.execute('''CREATE TABLE penalties (ETid text, Country text, Date text, Fine real, Controller_Processor text,
+                                               Quoted text,Type text,Source text,Autority text,Sector text,Summary text,Direct_url text)''')
     except sqlite3.OperationalError:
         ETids = cur.execute("SELECT ETid FROM penalties").fetchall()
         #print(ETid)
@@ -38,14 +41,20 @@ def populate(cur,today_timestamp):
                     except ValueError:
                      ntime =  datetime.strptime(item[4],"%Y")
 
-            #Scrape the link from the htlm structure
-            link=item[11]
-            if link=="":
-                link="no Link"
-            else:
-                link=link.split(" ")[2]
+            match = re.search(r'href=[\'"]?([^\'" >]+)', item[11])
+            if match:
+                link = match.group(1)
+            else: link =" "
+            #Scrape the Direct Url data
+            match = re.search(r'href=[\'"]?([^\'" >]+)', item[12])
+            if match:
+                direct_url = match.group(1)         
+            else: direct_url=" "
             #Insert the row inside the database
-            cur.execute("INSERT INTO penalties  VALUES(?,?,?,?,?,?,?,?)",(item[1],item[2].split("/>",1)[1],ntime.date(),item[5],item[6],item[8],item[9],link))
+            cur.execute("INSERT INTO penalties  VALUES(?,?,?,?,?,?,?,?,?,?,?,?)",
+                                                        (item[1],item[2].split("/>",1)[1],ntime.date(),
+                                                        item[5],item[6],item[8],item[9],link,item[3],
+                                                        item[7],item[10],direct_url))
             con.commit()
     return new_rows_count
 #Connect to the Database and populate and call the populate function
@@ -58,5 +67,6 @@ new_rows_count = populate(cur,time.time())
 cur.execute("SELECT COUNT(ETid) FROM penalties")
 print("The database has added : "+str(new_rows_count)+" new rows")
 print("The database has: "+ str(cur.fetchall())+" rows in total")
+
 
 
