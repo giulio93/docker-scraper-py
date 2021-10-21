@@ -39,7 +39,7 @@ Now let's query the database!
 
 
 ## Quering the database
-Exit from the tail -f output (CTRL + D) and query the database using the custom command!
+Exit from the tail -f output (CTRL + C) and query the database using the custom command!
 Use the help function to show which queries are available:
 ```bash
 root@5ed72d77c714:/app# python3 queries.py help
