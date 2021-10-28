@@ -8,14 +8,14 @@ import re
 #Function that will populate the database
 def populate(cur,today_timestamp):
 
-    ETids = [] #Use to check new records with the alredy saved ones
+    ETids = [] #Use to check new records with the already saved ones
     new_rows_count = 0 #Count how many new rows we add each run
     #Try to create the penalties table,if not exist already
     try:
         cur.execute('''CREATE TABLE penalties (ETid text, Country text, Date text, Fine real, Controller_Processor text,
                                                Quoted text,Type text,Source text,Autority text,Sector text,Summary text,Direct_url text)''')
     except sqlite3.OperationalError:
-        #catch the exeption because the table exist. Retrive all teh ETid already present 
+        #catch the exeption because the table exist. Retrive all the ETid already present 
         ETids = cur.execute("SELECT ETid FROM penalties").fetchall()
 
     #Get the json data directly from the XHR response adding the timestamp
